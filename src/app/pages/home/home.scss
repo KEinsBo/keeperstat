@@ -1,35 +1,58 @@
 @import "../../../variables";
 
 #headline {
-  font-size: 28px;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 #subtext {
   margin-top: 0px;
-  font-size: 16px;
+  font-size: 18px;
+  opacity: 0.8;
   margin-bottom: 2rem;
 }
 #cards {
-  margin-top: 2rem;
+  padding-top: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+  background-color: $background-color;
 }
 #lets-go {
   text-decoration: none;
   background-color: $blue;
   color: $white;
 }
-#lets-go:onclick {
-  background-color: $white;
-  color: $black;
+#hero {
+  margin-bottom: 2.5rem;
+  position: relative;
 }
+
 #bg {
-  top: 10;
+  position: absolute;
+  top: 10px;
   left: 0;
   width: 90%;
-
-  position: absolute;
   margin-left: 5%;
-  z-index: -100;
+  z-index: -1;
+}
+@media (min-width: 700px) {
+  #hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #bg {
+    position: static;
+    width: 60%;
+    order: 2;
+  }
+
+  #hero-content {
+    width: 50%;
+    order: 1;
+  }
 }
