@@ -1,0 +1,18 @@
+<nav>
+  <a id="logo" routerLink="">KeeperStat</a>
+  <div id="navigation">
+    <a
+      class="menu-item"
+      routerLink=""
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Home
+    </a>
+    <a class="menu-item" routerLink="/stats" routerLinkActive="active"> Stats </a>
+
+    <a class="menu-item" routerLink="/settings">
+      <img src="/icons/settings.svg" alt="Hi" id="icon"
+    /></a>
+  </div>
+</nav>

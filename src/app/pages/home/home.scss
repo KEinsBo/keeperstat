@@ -1,0 +1,35 @@
+@import "../../../variables";
+
+#headline {
+  font-size: 28px;
+  margin-bottom: 0.5rem;
+}
+#subtext {
+  margin-top: 0px;
+  font-size: 16px;
+  margin-bottom: 2rem;
+}
+#cards {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem
+}
+#lets-go {
+  text-decoration: none;
+  background-color: $blue;
+  color: $white;
+}
+#lets-go:onclick {
+  background-color: $white;
+  color: $black;
+}
+#bg {
+  top: 10;
+  left: 0;
+  width: 90%;
+
+  position: absolute;
+  margin-left: 5%;
+  z-index: -100;
+}

@@ -1,0 +1,44 @@
+@import "../../../variables";
+nav {
+  padding-left: $lr-padding;
+  padding-right: $lr-padding;
+  display: flex;
+  background: white;
+  height: 56px;
+  align-items: center;
+  justify-items: left;
+  border: $border;
+}
+
+#icon {
+  padding-top: 3px;
+  color: $black;
+  width: 24px;
+  height: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
+}
+
+.menu-item {
+  font-weight: medium;
+}
+
+.active {
+  font-weight: bold;
+}
+
+#navigation {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-items: right;
+  font-size: 14;
+  gap: 20px;
+}
+
+#logo {
+  font-size: 20px;
+}
