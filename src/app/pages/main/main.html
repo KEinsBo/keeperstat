@@ -2,7 +2,7 @@
   <div id="left">
     <div class="buttons">
       <a class="save btn">Gehalten</a>
-      <a class="miss btn">Pfosten/Block</a>
+      <a class="miss btn">Miss</a>
       <a class="goal btn">Tor</a>
       <a id="undo" class="btn">Rückgängig</a>
     </div>
@@ -20,12 +20,27 @@
       <div class="cell" data-row="2" data-col="1"></div>
       <div class="cell" data-row="2" data-col="2"></div>
     </div>
-    <div class="buttons">
-      <a class="miss btn">Pfosten/Block</a>
+    <div class="buttons" id="btns-right">
+      <a class="miss btn">Miss</a>
       <a class="save btn">Gehalten</a>
       <a id="redo" class="btn">Wiederholen</a>
       <a class="goal btn">Tor</a>
     </div>
   </div>
 </div>
-<div id="bottom"></div>
+<div id="bottom">
+  <div class="change-goalie">
+    <a>
+      <img src="icons/arrow_drop_down.svg" alt="▼" class="gk-change" />
+      <p id="gk-name-one" class="gk-name">T1</p>
+    </a>
+  </div>
+  <div id="statistics"><p id="stats">50% Paraden</p></div>
+  <a id="change-mode"><img src="icons/loop.svg" alt="⟳" /></a>
+  <div class="change-goalie">
+    <a>
+      <img src="icons/arrow_drop_down.svg" alt="▼" class="gk-change" />
+      <p id="gk-name-two" class="gk-name">T1</p>
+    </a>
+  </div>
+</div>

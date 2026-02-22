@@ -3,22 +3,25 @@
 #bottom {
   position: absolute;
   bottom: 0;
-  width: 100vw;
+  width: 100%;
   height: 56px;
   background-color: $white;
   padding-left: $lr-padding;
   padding-right: $lr-padding;
   border: $border;
+  display: flex;
+  align-items: center;
 }
 
 .content {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
-  height: calc(100svh - 113px);
+  height: calc(100svh - 120px);
   justify-content: stretch;
   align-items: stretch;
   gap: 0;
+  overflow: hidden;
 }
 
 #left, #right {
@@ -26,6 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 0;
 }
 
 .divider {
@@ -43,11 +47,20 @@
 .save {
   background-color: $green;
 }
+.save:active, .miss:active, .goal:active {
+  color: $black;
+  background-color: $border-color;
+}
 .miss {
   background-color: $blue;
 }
 .goal {
   background-color: $red;
+}
+
+#undo:active, #redo:active {
+  background-color: $blue;
+  color: $white;
 }
 
 #undo, #redo {
@@ -76,31 +89,33 @@
   overflow: hidden;
 }
 
+.position.goal-active {
+  box-shadow: 0 0 40px rgba($red, 0.5);
+}
+.position.save-active {
+  box-shadow: 0 0 40px rgba($red, 0.5);
+}
+
 .cell {
   border: $border;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: 0.2s;
 }
 
-.cell:hover {
+.cell:active {
   background-color: $border-color;
 }
 
 @media (orientation: landscape) {
-  #left, #right {
-    margin: 1rem 0;
-  }
-  #left {
-    margin-right: 1rem;
-  }
-  #right {
-   margin-left: 1rem;
+    #left, #right {
+    margin-top: 1rem;
   }
   .content {
     flex-direction: row;
+    gap: 1rem;
   }
 
   .divider {
@@ -113,10 +128,12 @@
   #left, #right {
     margin: 1rem 0;
   }
+  #right {
+    margin-bottom: -2rem;
+  }
   .content {
     flex-direction: column;
   }
-
   .divider {
     width: 100%;
     height: 1px;
@@ -125,4 +142,32 @@
 
 * {
   box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.change-goalie a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#change-mode {
+  margin-left: auto;
+  margin-right: 1.25rem;
+}
+
+#statistics {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (orientation: portrait) {
+  #btns-right .save { order: 1; }
+  #btns-right .miss { order: 2; }
+  #btns-right .goal { order: 3; }
+  #btns-right #redo { order: 4; }
 }
