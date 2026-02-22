@@ -29,10 +29,9 @@
   margin-bottom: 2.5rem;
   position: relative;
 }
-
 #bg {
   position: absolute;
-  top: 10px;
+  top: 0.5rem;
   left: 0;
   width: 90%;
   margin-left: 5%;
@@ -44,13 +43,12 @@
     align-items: center;
     justify-content: space-between;
   }
-
   #bg {
     position: static;
+    margin-top: 20px;
     width: 60%;
     order: 2;
   }
-
   #hero-content {
     width: 50%;
     order: 1;

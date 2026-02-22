@@ -2,13 +2,13 @@
 @import 'variables';
 
 .card {
-    display: inline-block;
+  display: inline-block;
   border: $border;
   border-radius: $border-radius;
   background-color: $white;
   padding-left: 2rem;
   padding-right: 2rem;
-  max-width: 300px;
+  max-width: 16rem;
   height: auto;
   align-items: center;
   text-align: center;
@@ -22,6 +22,8 @@
   border-radius: 20px;;
   align-items: center;
   text-align: center;
+  justify-content: center;
+
   box-shadow: 0 4px 4px 0 rgba(10, 36, 99, 0.06);
 }
 
@@ -71,5 +73,11 @@ hr {
 }
 
 .card {
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 1s ease forwards;
+}
+
+.hidden {
+  display: none;
+  position: absolute;
+  visibility: hidden;
 }

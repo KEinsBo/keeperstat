@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://keeperstat.netlify.app/sitemap.xml
