@@ -1,1 +1,63 @@
-<p>stats works!</p>
+<div class="content">
+  <div id="top">
+    <h2>Statistiken</h2>
+    <div id="selector">
+      <div class="select-wrapper">
+        <label for="gameSelect">Spiel auswählen: </label>
+        <select id="gameSelect" [(ngModel)]="selectedGame" (ngModelChange)="onSelectionChange()">
+          <option *ngFor="let option of gameOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+      <div class="gk-wrapper">
+        <label for="gkSelect">Torwart auswählen: </label>
+        <select id="gkSelect" [(ngModel)]="selectedGK" (ngModelChange)="onSelectionChange()">
+          <option value="all">Alle Torhüter</option>
+          <option value="team1">Team 1</option>
+          <option value="team2">Team 2</option>
+          <option *ngFor="let gk of gkOptions" [value]="gk">
+            {{ gk }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div id="stats">
+    <h3>Grundlegende Stats:</h3>
+    <table class="stats-table">
+      <tr>
+        <td>Paraden</td>
+        <td class="right-stat">{{ saves }}</td>
+      </tr>
+      <tr>
+        <td>Danebengeworfene</td>
+        <td class="right-stat">{{ misses }}</td>
+      </tr>
+      <tr>
+        <td>Reingegangene</td>
+        <td class="right-stat">{{ goals }}</td>
+      </tr>
+      <tr>
+        <td>Paradenquote</td>
+        <td class="right-stat">{{ (saves / (goals + saves)) * 100 | number: '1.0-2' }}%</td>
+      </tr>
+    </table>
+  </div>
+  <hr />
+  <div class="heatmap-wrap-wrap">
+    <h3>Heatmap</h3>
+    <div class="hm-wrapper">
+      <label for="hmSelect">Anzeige:</label>
+      <select id="hmSelect" [(ngModel)]="selectedHm" (ngModelChange)="onHmChange()">
+        <option value="throwcount">Wurfanzahl</option>
+        <option value="goaldensity">Tordichte</option>
+        <option value="savequote">Paradenquote</option>
+      </select>
+    </div>
+    <div class="heatmap">
+      <div *ngFor="let color of fieldColors" class="heatmap-cell" [style.background]="color"></div>
+    </div>
+  </div>
+</div>

@@ -1,46 +1,75 @@
-<div class="content">
+<div class="content" [class.hidden]="showPopup">
   <div id="left">
     <div class="buttons">
-      <a class="save btn">Gehalten</a>
-      <a class="miss btn">Miss</a>
-      <a class="goal btn">Tor</a>
-      <a id="undo" class="btn">Rückgängig</a>
+      <a class="save btn" (click)="addEvent('save', 0)">Gehalten</a>
+      <a class="miss btn" (click)="addEvent('miss', 0)">Miss</a>
+      <a class="goal btn" (click)="addEvent('goal', 0)">Tor</a>
+      <a id="undo" class="btn" (click)="undo()">Rückgängig</a>
     </div>
   </div>
   <div class="divider"></div>
   <div id="right">
-    <div class="position hidden">
-      <div class="cell" data-row="0" data-col="0"></div>
-      <div class="cell" data-row="0" data-col="1"></div>
-      <div class="cell" data-row="0" data-col="2"></div>
-      <div class="cell" data-row="1" data-col="0"></div>
-      <div class="cell" data-row="1" data-col="1"></div>
-      <div class="cell" data-row="1" data-col="2"></div>
-      <div class="cell" data-row="2" data-col="0"></div>
-      <div class="cell" data-row="2" data-col="1"></div>
-      <div class="cell" data-row="2" data-col="2"></div>
-    </div>
     <div class="buttons" id="btns-right">
-      <a class="miss btn">Miss</a>
-      <a class="save btn">Gehalten</a>
-      <a id="redo" class="btn">Wiederholen</a>
-      <a class="goal btn">Tor</a>
+      <a class="miss btn" (click)="addEvent('miss', 1)">Miss</a>
+      <a class="save btn" (click)="addEvent('save', 1)">Gehalten</a>
+      <a id="redo" class="btn" [ngClass]="{ freethrowing: freethrow }" (click)="doFreethrow()"
+        >7 meter</a
+      >
+      <a class="goal btn" (click)="addEvent('goal', 1)">Tor</a>
     </div>
+  </div>
+</div>
+<div id="popup" class="hidden" [class.hidden]="!showPopup" (click)="closePopup()">
+  <div class="position">
+    <div class="cell" data-row="0" data-col="0" (click)="addPosition(0, 0)"></div>
+    <div class="cell" data-row="0" data-col="1" (click)="addPosition(0, 1)"></div>
+    <div class="cell" data-row="0" data-col="2" (click)="addPosition(0, 2)"></div>
+    <div class="cell" data-row="1" data-col="0" (click)="addPosition(1, 0)"></div>
+    <div class="cell" data-row="1" data-col="1" (click)="addPosition(1, 1)"></div>
+    <div class="cell" data-row="1" data-col="2" (click)="addPosition(1, 2)"></div>
+    <div class="cell" data-row="2" data-col="0" (click)="addPosition(2, 0)"></div>
+    <div class="cell" data-row="2" data-col="1" (click)="addPosition(2, 1)"></div>
+    <div class="cell" data-row="2" data-col="2" (click)="addPosition(2, 2)"></div>
   </div>
 </div>
 <div id="bottom">
   <div class="change-goalie">
     <a>
-      <img src="icons/arrow_drop_down.svg" alt="▼" class="gk-change" />
-      <p id="gk-name-one" class="gk-name">T1</p>
+      <p *ngIf="editingTeam !== 0" class="gk-name" (click)="startEditing(0)">
+        {{ goalies.team1 }}
+      </p>
+
+      <input
+        *ngIf="editingTeam === 0"
+        [(ngModel)]="goalies.team1"
+        (input)="updateInputWidth($event)"
+        (blur)="stopEditing()"
+        (keyup.enter)="stopEditing()"
+        class="gk-name"
+        autofocus
+      />
     </a>
   </div>
-  <div id="statistics"><p id="stats">50% Paraden</p></div>
-  <a id="change-mode"><img src="icons/loop.svg" alt="⟳" /></a>
+
+  <div id="statistics">
+    <p>{{ pqt1 | number: '1.0-0' }}% | {{ pqt2 | number: '1.0-0' }}%</p>
+  </div>
+
   <div class="change-goalie">
     <a>
-      <img src="icons/arrow_drop_down.svg" alt="▼" class="gk-change" />
-      <p id="gk-name-two" class="gk-name">T1</p>
+      <p *ngIf="editingTeam !== 1" class="gk-name" (click)="startEditing(1)">
+        {{ goalies.team2 }}
+      </p>
+
+      <input
+        *ngIf="editingTeam === 1"
+        [(ngModel)]="goalies.team2"
+        (input)="updateInputWidth($event)"
+        (blur)="stopEditing()"
+        (keyup.enter)="stopEditing()"
+        class="gk-name"
+        autofocus
+      />
     </a>
   </div>
 </div>

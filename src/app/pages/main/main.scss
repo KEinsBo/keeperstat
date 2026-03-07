@@ -1,4 +1,4 @@
-@import "../../../variables";
+@import '../../../variables';
 
 #bottom {
   position: absolute;
@@ -24,7 +24,23 @@
   overflow: hidden;
 }
 
-#left, #right {
+#popup {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  height: calc(100svh - 120px);
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+  overflow: hidden;
+  position: relative;
+  padding-left: $lr-padding;
+  padding-right: $lr-padding;
+  padding-bottom: 5vh;
+}
+
+#left,
+#right {
   flex: 1 1 50%;
   display: flex;
   justify-content: center;
@@ -47,7 +63,9 @@
 .save {
   background-color: $green;
 }
-.save:active, .miss:active, .goal:active {
+.save:active,
+.miss:active,
+.goal:active {
   color: $black;
   background-color: $border-color;
 }
@@ -58,12 +76,14 @@
   background-color: $red;
 }
 
-#undo:active, #redo:active {
+#undo:active,
+#redo:active {
   background-color: $blue;
   color: $white;
 }
 
-#undo, #redo {
+#undo,
+#redo {
   color: $black;
   background-color: $border-color;
 }
@@ -84,9 +104,15 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   width: 100%;
-  height: 100%;
   background-color: $white;
   overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+
+#popup.hidden {
+  display: none;
+  position: absolute;
+  visibility: hidden;
 }
 
 .position.goal-active {
@@ -110,7 +136,8 @@
 }
 
 @media (orientation: landscape) {
-    #left, #right {
+  #left,
+  #right {
     margin-top: 1rem;
   }
   .content {
@@ -125,7 +152,8 @@
 }
 
 @media (orientation: portrait) {
-  #left, #right {
+  #left,
+  #right {
     margin: 1rem 0;
   }
   #right {
@@ -144,7 +172,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   overflow-x: hidden;
 }
@@ -166,8 +195,50 @@ html, body {
 }
 
 @media (orientation: portrait) {
-  #btns-right .save { order: 1; }
-  #btns-right .miss { order: 2; }
-  #btns-right .goal { order: 3; }
-  #btns-right #redo { order: 4; }
+  #btns-right .save {
+    order: 1;
+  }
+  #btns-right .miss {
+    order: 2;
+  }
+  #btns-right .goal {
+    order: 3;
+  }
+  #btns-right #redo {
+    order: 4;
+  }
+}
+
+.change-goalie:first-child {
+  margin-right: auto;
+}
+
+.change-goalie:last-child {
+  margin-left: auto;
+}
+
+.change-goalie input.gk-name {
+  flex: 0 0 auto;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $black;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+  background-color: $white;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  width: 10ch;
+  min-width: 2ch;
+  transition: 0.2s;
+}
+
+.change-goalie input.gk-name:focus {
+  box-shadow: 0 0 5px rgba($blue, 0.5);
+  background-color: lighten($white, 5%);
+}
+
+#redo.freethrowing {
+  background-color: $blue;
+  color: $white;
 }

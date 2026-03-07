@@ -16,14 +16,14 @@
 }
 
 .btn {
+  display: inline-block;
   padding: 0.4rem 0.8rem;
   border-radius: $border-radius;
   background-color: $white;
-  border-radius: 20px;;
+  border-radius: 20px;
   align-items: center;
   text-align: center;
   justify-content: center;
-
   box-shadow: 0 4px 4px 0 rgba(10, 36, 99, 0.06);
 }
 
@@ -40,7 +40,8 @@ body {
   background-color: $background-color;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;

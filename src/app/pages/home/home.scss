@@ -24,6 +24,27 @@
   text-decoration: none;
   background-color: $blue;
   color: $white;
+  margin-bottom: 1.25rem;
+}
+
+.btn {
+  width: fit-content;
+}
+
+.side-btns {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  flex-direction: column;
+  gap: 1rem;
+  height: 4rem;
+}
+
+#new-game, #continue {
+  height: fit-content;
+  text-decoration: none;
+  background-color: $border-color;
+  color: $black;
 }
 #hero {
   margin-bottom: 2.5rem;

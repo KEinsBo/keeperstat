@@ -1,0 +1,73 @@
+@import '../../../variables';
+
+#top {
+  margin-bottom: 2rem;
+}
+#stats {
+  margin-top: 2rem;
+}
+.select-wrapper,
+.gk-wrapper,
+.hm-wrapper {
+  position: relative;
+  width: 220px;
+}
+.select-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.heatmap-wrap-wrap {
+  margin-top: 1.5rem;
+}
+
+select {
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: $black;
+  background-color: $white;
+  padding: 0.5rem 1rem;
+  transition: 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+select:focus {
+  outline: none;
+  border-color: $border-color;
+}
+
+.stats-table {
+  border-collapse: collapse;
+  width: calc(100vw - $lr-padding * 2);
+  tr:nth-child(even) {
+    background-color: lighten($border-color, 1%);
+  }
+  margin-bottom: 2rem;
+}
+
+.right-stat {
+  text-align: right;
+}
+
+.heatmap {
+  border: $border;
+  border-radius: $border-radius;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: calc(100vw - $lr-padding * 2);
+  background-color: $white;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  margin: auto;
+}
+
+.heatmap-cell {
+  border: $border;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
