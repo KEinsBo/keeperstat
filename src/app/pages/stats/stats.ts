@@ -146,17 +146,8 @@ export class Stats implements OnInit {
       this.updateGoalies();
     }
     this.calculateStats();
+    this.updateHeatmap();
   }
-
-  // interpolateColor(rate: number, minRate: number, maxRate: number): string {
-  //   const t = (rate - minRate) / (maxRate - minRate);
-
-  //   const r = Math.round(254 + (44 - 254) * t);
-  //   const g = Math.round(95 + (110 - 95) * t);
-  //   const b = Math.round(85 + (73 - 85) * t);
-
-  //   return `rgb(${r}, ${g}, ${b})`;
-  // }
 
   interpolateColorHSL(rate: number, minRate: number, maxRate: number): string {
     const t = (rate - minRate) / (maxRate - minRate); // 0..1
@@ -172,5 +163,125 @@ export class Stats implements OnInit {
     return `rgb(${r},${g},${b})`;
   }
 
-  onHmChange() {}
+  calculateFieldStats(): FieldStats[] {
+    const actions = this.getFilteredActions();
+
+    const stats: FieldStats[] = Array(9)
+      .fill(0)
+      .map(() => ({ saves: 0, goals: 0 }));
+
+    actions.forEach((action) => {
+      if (!action.position) return;
+      const [row, col] = action.position;
+      const fieldIndex = row * 3 + col;
+
+      if (fieldIndex < 0 || fieldIndex >= stats.length) return;
+
+      if (action.type === 'save') stats[fieldIndex].saves += 1;
+      if (action.type === 'goal') stats[fieldIndex].goals += 1;
+    });
+
+    return stats;
+  }
+  heatmapValues: string[] = [];
+
+  updateHeatmap() {
+    const stats = this.calculateFieldStats();
+
+    const rates = stats.map((f) => {
+      if (this.selectedHm === 'savequote') {
+        const total = f.saves + f.goals;
+        return total === 0 ? 0 : f.saves / total;
+      } else if (this.selectedHm === 'throwcount') {
+        return f.saves + f.goals;
+      } else if (this.selectedHm === 'goaldensity') {
+        return f.goals;
+      }
+      return 0;
+    });
+
+    const minRate = Math.min(...rates);
+    const maxRate = Math.max(...rates);
+
+    this.fieldColors = rates.map((rate) => this.interpolateColorHSL(rate, minRate, maxRate));
+
+    this.heatmapValues = rates.map((rate) => {
+      if (this.selectedHm === 'savequote') return `${Math.round(rate * 100)}%`;
+      return `${rate}`;
+    });
+  }
+
+  onHmChange() {
+    this.updateHeatmap();
+  }
+
+  deleteGameByIndex(index: number) {
+    this.mainService.deleteGame(index);
+    this.gameOptions = this.mainService.getGameOptions();
+    this.onSelectionChange();
+  }
+
+  exportGame(date: string) {
+    const game = this.mainService.getData().games.find((g: any) => g.date === date);
+    if (!game) return;
+
+    const blob = new Blob([JSON.stringify({ games: [game] }, null, 2)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `game_${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  exportData() {
+    const dataStr = JSON.stringify(this.mainService.getData(), null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'handball_data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  importData(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || !input.files.length) return;
+
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const jsonData = JSON.parse(reader.result as string);
+
+        if (!jsonData || !Array.isArray(jsonData.games)) {
+          console.error('Importierte Datei hat falsches Format', jsonData);
+          return;
+        }
+        this.mainService.addImportedGames(jsonData);
+
+        this.gameOptions = this.mainService.getGameOptions();
+
+        this.onSelectionChange();
+
+        console.log('Import erfolgreich abgeschlossen');
+      } catch (e) {
+        console.error('Fehler beim Importieren der Datei', e);
+      } finally {
+        input.value = '';
+      }
+    };
+
+    reader.onerror = (err) => {
+      console.error('Fehler beim Lesen der Datei', err);
+    };
+
+    reader.readAsText(file);
+  }
 }

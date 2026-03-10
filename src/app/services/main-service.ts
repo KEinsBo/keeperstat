@@ -151,4 +151,19 @@ export class MainService {
 
     return uniqueGoalies;
   }
+
+  addImportedGames(importedData: any) {
+    if (!importedData || !Array.isArray(importedData.games)) {
+      console.error('Importierte Daten sind ungültig:', importedData);
+      return;
+    }
+    const existingDates = new Set(this.data.games.map((g: any) => g.date));
+
+    const newGames = importedData.games.filter((g: any) => !existingDates.has(g.date));
+
+    this.data.games.push(...newGames);
+    this.saveToCache();
+
+    console.log(`Import abgeschlossen. ${newGames.length} neue Spiele hinzugefügt.`, this.data);
+  }
 }

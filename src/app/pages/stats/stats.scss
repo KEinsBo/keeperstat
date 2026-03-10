@@ -12,12 +12,17 @@
   position: relative;
   width: 220px;
 }
+
 .select-wrapper {
   margin-bottom: 1.5rem;
 }
 
 .heatmap-wrap-wrap {
   margin-top: 1.5rem;
+}
+
+.hm-wrapper label {
+  display: block;
 }
 
 select {
@@ -46,6 +51,19 @@ select:focus {
   margin-bottom: 2rem;
 }
 
+.data-table {
+  border-collapse: collapse;
+  width: calc(100vw - $lr-padding * 2);
+  tr:nth-child(even),
+  th {
+    background-color: lighten($border-color, 1%);
+  }
+  margin-bottom: 2rem;
+  tr td {
+    text-align: center;
+  }
+}
+
 .right-stat {
   text-align: right;
 }
@@ -61,6 +79,7 @@ select:focus {
   overflow: hidden;
   aspect-ratio: 3 / 2;
   margin: auto;
+  max-width: 600px;
 }
 
 .heatmap-cell {
@@ -70,4 +89,22 @@ select:focus {
   align-items: center;
   cursor: pointer;
   transition: 0.2s;
+}
+
+.heatmap-number {
+  color: white;
+  font-size: calc(12px + 0.5vw);
+  pointer-events: none;
+}
+
+.btn {
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: $black;
+  background-color: $white;
+  padding: 0.5rem 1rem;
+  transition: 0.2s ease;
+  margin: 0.5rem 0.5rem;
 }

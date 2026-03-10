@@ -3,6 +3,7 @@ import { MainService } from '../../services/main-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import confetti from 'canvas-confetti';
+import { WebHaptics, defaultPatterns } from 'web-haptics';
 
 @Component({
   selector: 'app-main',
@@ -12,14 +13,14 @@ import confetti from 'canvas-confetti';
 })
 export class Main implements OnInit {
   constructor(private mainService: MainService) {}
-
+  haptics = new WebHaptics();
   freethrow = false;
 
   pqt1 = 0;
   pqt2 = 0;
   showPopup = false;
 
-  enableConfetti = true;
+  enableConfetti = false;
 
   goalies = {
     team1: 'T1',
@@ -35,6 +36,7 @@ export class Main implements OnInit {
   }
 
   addEvent(type: string, team: number) {
+    this.haptics.trigger();
     this.freethrow = false;
     this.mainService.addEvent(type, team, this.getGoalieName(team), this.freethrow);
     if (
@@ -53,6 +55,7 @@ export class Main implements OnInit {
   }
 
   addPosition(posX: number, posY: number) {
+    this.haptics.trigger();
     this.mainService.addPosition(posX, posY);
     this.closePopup();
   }
