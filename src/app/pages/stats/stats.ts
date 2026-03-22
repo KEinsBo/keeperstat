@@ -54,31 +54,26 @@ export class Stats implements OnInit {
   goals = 0;
 
   selectedHm: string = 'savequote';
-
   fieldStats: FieldStats[] = [
-    { saves: 3, goals: 2 }, // Feld 1
-    { saves: 1, goals: 4 }, // Feld 2
-    { saves: 5, goals: 1 }, // Feld 3
-    { saves: 5, goals: 1 }, // Feld 4
-    { saves: 2, goals: 10 }, // Feld 5
-    { saves: 5, goals: 1 }, // Feld 6
-    { saves: 5, goals: 1 }, // Feld 7
-    { saves: 1, goals: 1 }, // Feld 8
-    { saves: 5, goals: 6 }, // Feld 9
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
+    { saves: 0, goals: 0 },
   ];
 
   fieldColors: string[] = [];
   ngOnInit() {
     this.mainService.loadFromCache();
-
     this.gameOptions = this.mainService.getGameOptions();
     this.updateGoalies();
     this.calculateStats();
     this.onSelectionChange();
-    const saveRates = this.fieldStats.map((f) => f.saves / (f.saves + f.goals));
-    const minRate = Math.min(...saveRates);
-    const maxRate = Math.max(...saveRates);
-    this.fieldColors = saveRates.map((rate) => this.interpolateColorHSL(rate, minRate, maxRate));
+    this.updateHeatmap();
   }
 
   updateGoalies() {
@@ -102,7 +97,6 @@ export class Stats implements OnInit {
   getFilteredActions(): GameAction[] {
     console.log('getting actions');
     const data = this.mainService.getData();
-
     if (!data || !data.games) {
       console.log('returning early');
       return [];
@@ -117,7 +111,7 @@ export class Stats implements OnInit {
         filteredActions = game.actions;
       }
     } else {
-      filteredActions = games.flatMap((g) => g.actions ?? []); // <-- safe
+      filteredActions = games.flatMap((g) => g.actions ?? []);
     }
     if (this.selectedGK !== 'all') {
       if (this.selectedGK === 'team1') {
@@ -150,13 +144,12 @@ export class Stats implements OnInit {
   }
 
   interpolateColorHSL(rate: number, minRate: number, maxRate: number): string {
-    const t = (rate - minRate) / (maxRate - minRate); // 0..1
+    const t = (rate - minRate) / (maxRate - minRate);
 
-    // RGB von SCSS
-    const start = { r: 44, g: 110, b: 73 }; // $green
-    const end = { r: 254, g: 95, b: 85 }; // $red
+    const start = { r: 44, g: 110, b: 73 };
+    const end = { r: 254, g: 95, b: 85 };
 
-    const r = Math.round(start.r + (end.r - start.r) * (1 - t)); // Grün->Rot, 1-t für richtig
+    const r = Math.round(start.r + (end.r - start.r) * (1 - t));
     const g = Math.round(start.g + (end.g - start.g) * (1 - t));
     const b = Math.round(start.b + (end.b - start.b) * (1 - t));
 
@@ -277,7 +270,6 @@ export class Stats implements OnInit {
         input.value = '';
       }
     };
-
     reader.onerror = (err) => {
       console.error('Fehler beim Lesen der Datei', err);
     };

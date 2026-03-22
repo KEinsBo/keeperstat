@@ -50,7 +50,9 @@ export class Main implements OnInit {
         colors: ['#0A2463', '#FE5F55', '#2C6E49'],
       });
     }
-    this.showPopup = true;
+    if (type != 'miss') {
+      this.showPopup = true;
+    }
     this.updateStats();
   }
 
